@@ -8,9 +8,26 @@ object BishopMoves {
   import chess.typedchess.internal.state.Pieces._
 
   def bishopMovesAndCaptures(square: Square, side: Side, pieceAt: Square => Option[Piece]): (Seq[TCMove], Seq[TCMove]) = {
-    val vectors = Diagonals.diagonalVectors(square)
-
-    LinearMoves.linearMovesAndCaptures(Bishop, vectors, square, side, pieceAt)
+    LinearMoves.linearMovesAndCaptures(
+      Diagonals.diagonalVectors,
+      allBishopMoveVectors,
+      allBishopCaptureVectors,
+      square,
+      side,
+      pieceAt)
   }
+
+  val allBishopMoveVectors: Map[Side, Map[Square, Map[Square, TCMove]]] = LinearMoves
+    .allLinearCaptureVectors(
+      Bishop,
+      Diagonals.diagonalVectors
+    )
+
+  val allBishopCaptureVectors: Map[Side, Map[Square, Map[Square, TCMove]]] = LinearMoves
+    .allLinearCaptureVectors(
+      Bishop,
+      Diagonals.diagonalVectors
+    )
+
 
 }
