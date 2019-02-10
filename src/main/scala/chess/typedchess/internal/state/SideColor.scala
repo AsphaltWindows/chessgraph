@@ -1,4 +1,4 @@
-package chess.typedchess.internal
+package chess.typedchess.internal.state
 
 sealed trait SideColor
 

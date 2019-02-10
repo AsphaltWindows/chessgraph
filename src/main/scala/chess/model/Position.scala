@@ -2,20 +2,17 @@ package chess.model
 
 trait Position[T <: Types] {
 
-  val t: T
+  val types: T
 
-  type Side = t.Side
-  type Rank = t.Rank
-  type File = t.File
-  type Piece = t.Piece
-  type Square = t.Square
+  def toMove: types.Side
 
-  def moveOf: Side
+  def longCastle(side: types.Side): Boolean
+  def shortCastle(side: types.Side): Boolean
 
-  def longCastle(side: Side): Boolean
-  def shortCastle(side: Side): Boolean
+  def onSquare(square: types.Square): Option[types.Piece]
+  def allSquares: Map[types.Square, types.Piece]
 
-  def onSquare(square: Square): Option[Piece]
-  def allSquares: Map[Square, Piece]
+  def enPassant: Option[types.Square]
 
+  def id: String
 }

@@ -2,7 +2,7 @@ package chess.typedchess.concrete
 
 import chess.model.Notation
 
-object TCAlgebraicNotation extends Notation[TCTypes.type, TCPosition, TCMove] {
+object TCNotation extends Notation[TCTypes.type, TCPosition, TCMove] {
   override def print(position: TCPosition): String = "lol"
 
   override def print(move: TCMove): String = "lol2"

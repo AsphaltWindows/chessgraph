@@ -6,7 +6,9 @@ trait Types {
   type Rank
   type File
   type State
+  type Square
+  type Piece
 
-  type Square = (File, Rank)
-  type Piece = (Side, PieceType)
+  def sq(file: File, rank: Rank): Square
+  def pce(side: Side, pieceType: PieceType): Piece
 }

@@ -1,4 +1,4 @@
-package chess.typedchess.internal
+package chess.typedchess.internal.state
 
 object Pieces {
 
@@ -27,5 +27,3 @@ object Pieces {
   case object King extends PieceS("K") with NonPawn
 
 }
-
-
