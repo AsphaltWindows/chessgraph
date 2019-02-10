@@ -3,7 +3,8 @@ package chess.typedchess.concrete
 import chess.model.Position
 import chess.typedchess.concrete.TCTypes.FullPiece
 import chess.typedchess.internal.state.Board.TCSquare
-import chess.typedchess.internal.state.{Black, Board, PositionIndex, White}
+import chess.typedchess.internal.state.Pieces.King
+import chess.typedchess.internal.state._
 
 import scala.collection.mutable.{Map => MutMap}
 
@@ -13,15 +14,22 @@ class TCPosition extends Position[TCTypes.type] {
 
   override val types: TCTypes.type = TCTypes
 
-  type Side = types.Side
-  type Square = types.Square
-  type Piece = types.Piece
+  import TCTypes._
 
   override def toMove: Side = sideToMove
 
   override def onSquare(square: Square): Option[Piece] = index.boardMap.get(square)
 
   override def allSquares: Map[Square, Piece] = index.boardMap.toMap
+
+  override def allPieces(side: Side): Seq[(Square, Piece)] = index
+    .sideSquareMap(side)
+    .map { square =>
+      (square, index.boardMap(square))
+    }
+    .toSeq
+
+  override def findKing(side: Side): Square = index.pieceMap(pce(side, King)).head
 
   override def longCastle(side: Side): Boolean = longCastleMap(side)
 
@@ -62,6 +70,14 @@ class TCPosition extends Position[TCTypes.type] {
       case Remove(square) => index.remove(square)
       case Place(piece, on) => index.place(piece, on)
       case Reposition(from, to) => index.reposition(from, to)
+      case DisableLongCastle(side) => longCastleMap.update(side, false)
+      case DisableShortCastle(side) => shortCastleMap.update(side, false)
+      case SetEnPassant(square) =>
+        squareEnPassant = Some(square)
+      case ResetEnPassant =>
+        squareEnPassant = None
+      case FlipMove =>
+        sideToMove = SideColor.other(sideToMove)
     }
   }
 
@@ -70,6 +86,7 @@ class TCPosition extends Position[TCTypes.type] {
   val longCastleMap: MutMap[Side, Boolean] = MutMap(White -> true, Black -> true)
   val shortCastleMap: MutMap[Side, Boolean] = MutMap(White -> true, Black -> true)
   protected val index: PositionIndex = PositionIndex.init()
+
 }
 
 
@@ -94,5 +111,15 @@ object TCPosition {
   case class Place(piece: Piece, to: Square) extends PositionOp
 
   case class Reposition(from: Square, to: Square) extends PositionOp
+
+  case class DisableLongCastle(side: Side) extends PositionOp
+
+  case class DisableShortCastle(side: Side) extends PositionOp
+
+  case class SetEnPassant(square: Square) extends PositionOp
+
+  case object ResetEnPassant extends PositionOp
+
+  case object FlipMove extends PositionOp
 
 }

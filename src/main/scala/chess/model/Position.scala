@@ -11,6 +11,8 @@ trait Position[T <: Types] {
 
   def onSquare(square: types.Square): Option[types.Piece]
   def allSquares: Map[types.Square, types.Piece]
+  def allPieces(side: types.Side): Seq[(types.Square, types.Piece)]
+  def findKing(side: types.Side): types.Square
 
   def enPassant: Option[types.Square]
 

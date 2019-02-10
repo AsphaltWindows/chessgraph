@@ -1,5 +1,6 @@
 package chess.typedchess.internal.rules
 
+import chess.typedchess.concrete.Moves.{NonCastle, PieceMove}
 import chess.typedchess.concrete.TCMove
 
 object BishopMoves {
@@ -17,17 +18,19 @@ object BishopMoves {
       pieceAt)
   }
 
-  val allBishopMoveVectors: Map[Side, Map[Square, Map[Square, TCMove]]] = LinearMoves
+  val allBishopMoveVectors: Map[Side, Map[Square, Map[Square, PieceMove]]] = LinearMoves
     .allLinearCaptureVectors(
       Bishop,
       Diagonals.diagonalVectors
     )
 
-  val allBishopCaptureVectors: Map[Side, Map[Square, Map[Square, TCMove]]] = LinearMoves
+  val allBishopCaptureVectors: Map[Side, Map[Square, Map[Square, PieceMove]]] = LinearMoves
     .allLinearCaptureVectors(
       Bishop,
       Diagonals.diagonalVectors
     )
 
+  val allMovesFlattened: Seq[TCMove] = LinearMoves.flattenMoveVectors(allBishopMoveVectors) ++
+    LinearMoves.flattenMoveVectors(allBishopCaptureVectors)
 
 }

@@ -62,7 +62,7 @@ object Board {
 
   case object `8` extends RankS("8")
 
-  private val fileAdditionMap: Map[TCFile, Map[Int, TCFile]] = Map(
+  val fileAdditionMap: Map[TCFile, Map[Int, TCFile]] = Map(
     A -> Map(
       1 -> B,
       2 -> C,
@@ -108,7 +108,7 @@ object Board {
     H -> Map()
   )
 
-  private val fileSubtractionMap: Map[TCFile, Map[Int, TCFile]] = Map(
+  val fileSubtractionMap: Map[TCFile, Map[Int, TCFile]] = Map(
     A -> Map(),
     B -> Map(
       1 -> A,
@@ -154,7 +154,7 @@ object Board {
     )
   )
 
-  private val rankAdditionMap: Map[TCRank, Map[Int, TCRank]] = Map(
+  val rankAdditionMap: Map[TCRank, Map[Int, TCRank]] = Map(
     `1` -> Map(
       1 -> `2`,
       2 -> `3`,
@@ -200,7 +200,7 @@ object Board {
     `8` -> Map()
   )
 
-  private val rankSubtractionMap: Map[TCRank, Map[Int, TCRank]] = Map(
+  val rankSubtractionMap: Map[TCRank, Map[Int, TCRank]] = Map(
     `1` -> Map(),
     `2` -> Map(
       1 -> `1`,

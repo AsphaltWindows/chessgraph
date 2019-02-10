@@ -13,14 +13,14 @@ object KnightMoves {
 
   def knightMoves(square: Square, side: Side, squareFree: Square => Boolean): Seq[TCMove] = {
     allKnightMoves(side)(square)
-      .filter{ case (k, v) => squareFree(k)}
+      .filter { case (k, v) => squareFree(k) }
       .values
       .toSeq
   }
 
-  def knightCaptures(square: Square, side: Side, opponentPieceAt: Square => Boolean): Seq[TCMove] = {
+  def knightCaptures(square: Square, side: Side, opponentPieceAt: (Side, Square) => Boolean): Seq[TCMove] = {
     allKnightMoves(side)(square)
-      .filter{ case (k, v) => opponentPieceAt(k)}
+      .filter { case (k, v) => opponentPieceAt(k) }
       .values
       .toSeq
   }
@@ -67,7 +67,7 @@ object KnightMoves {
     }
     .toMap
 
-  private val allKnightMoves: Map[Side, Map[Square, Map[Square, NonCastle]]] = Map(
+  val allKnightMoves: Map[Side, Map[Square, Map[Square, PieceMove]]] = Map(
     White -> allKnightSquares
       .map { case (from, tos) =>
         from -> tos.map { to =>
@@ -84,7 +84,7 @@ object KnightMoves {
       }
   )
 
-  private val allKnightCaptures: Map[Side, Map[Square, Map[Square, NonCastle]]] = Map(
+  val allKnightCaptures: Map[Side, Map[Square, Map[Square, PieceMove]]] = Map(
     White -> allKnightSquares
       .map { case (from, tos) =>
         from -> tos.map { to =>
@@ -100,4 +100,14 @@ object KnightMoves {
           .toMap
       }
   )
+
+  val allMovesFlattened: Seq[TCMove] = allKnightMoves.toSeq.flatMap { case (_, moveFromMap) =>
+    moveFromMap.flatMap { case (_, moveToMap) =>
+      moveToMap.values
+    }
+  } ++ allKnightCaptures.toSeq.flatMap { case (_, moveFromMap) =>
+    moveFromMap.flatMap { case (_, moveToMap) =>
+      moveToMap.values
+    }
+  }
 }

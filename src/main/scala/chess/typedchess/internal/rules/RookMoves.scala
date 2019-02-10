@@ -1,5 +1,6 @@
 package chess.typedchess.internal.rules
 
+import chess.typedchess.concrete.Moves.PieceMove
 import chess.typedchess.concrete.TCMove
 import chess.typedchess.internal.state.Pieces.Rook
 
@@ -17,16 +18,19 @@ object RookMoves {
       pieceAt)
   }
 
-  val allRookMoveVectors: Map[Side, Map[Square, Map[Square, TCMove]]] = LinearMoves
+  val allRookMoveVectors: Map[Side, Map[Square, Map[Square, PieceMove]]] = LinearMoves
     .allLinearCaptureVectors(
       Rook,
       Lanes.laneVectors
     )
 
-  val allRookCaptureVectors: Map[Side, Map[Square, Map[Square, TCMove]]] = LinearMoves
+  val allRookCaptureVectors: Map[Side, Map[Square, Map[Square, PieceMove]]] = LinearMoves
     .allLinearCaptureVectors(
       Rook,
       Lanes.laneVectors
     )
+
+  val allMovesFlattened: Seq[TCMove] = LinearMoves.flattenMoveVectors(allRookMoveVectors) ++
+    LinearMoves.flattenMoveVectors(allRookCaptureVectors)
 
 }
