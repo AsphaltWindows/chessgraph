@@ -10,4 +10,7 @@ trait Model[T <: Types] {
   type Gam <: Game[T, Pos, Mov]
   type Rul <: Rules[T, Pos, Mov, Gam]
 
+  def newGame: Gam
+
+  def rules: Rul
 }
