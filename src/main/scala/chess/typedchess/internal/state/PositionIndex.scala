@@ -19,7 +19,7 @@ abstract class PositionIndex() {
     pieceOpt
       .foreach { case piece@FullPiece(side, _) =>
         boardMap -= square
-        pieceMap(side) -= square
+        pieceMap(piece) -= square
         sideSquareMap(side) -= square
       }
   }
@@ -47,14 +47,14 @@ object PositionIndex {
 
   def copy(index: PositionIndex): PositionIndex = new PositionIndex {
     override val boardMap: mutable.Map[Square, Piece] = MutMap() ++= index.boardMap
-    override val pieceMap: Map[(SideColor, Pieces.TCPiece), mutable.Set[(TCFile, TCRank)]] = {
+    override val pieceMap: Map[Piece, mutable.Set[Square]] = {
       index
         .pieceMap
         .map { case (k, v) =>
           k -> (MutSet() ++= v)
         }
     }
-    override val sideSquareMap: Map[SideColor, mutable.Set[(TCFile, TCRank)]] = {
+    override val sideSquareMap: Map[SideColor, mutable.Set[Square]] = {
       index
         .sideSquareMap
         .map { case (k, v) =>

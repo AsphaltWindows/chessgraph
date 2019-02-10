@@ -8,7 +8,7 @@ object RookMoves {
 
   import chess.typedchess.concrete.TCTypes._
 
-  def rookMovesAndCaptures(square: Square, side: Side, pieceAt: Square => Option[Piece]): (Seq[TCMove], Seq[TCMove]) = {
+  def rookMovesAndCaptures(square: Square, side: Side, pieceAt: Square => Option[Piece]): (Seq[(Square, TCMove)], Seq[(Square, TCMove)]) = {
     LinearMoves.linearMovesAndCaptures(
       Lanes.laneVectors,
       allRookMoveVectors,
@@ -19,7 +19,7 @@ object RookMoves {
   }
 
   val allRookMoveVectors: Map[Side, Map[Square, Map[Square, PieceMove]]] = LinearMoves
-    .allLinearCaptureVectors(
+    .allLinearMoveVectors(
       Rook,
       Lanes.laneVectors
     )

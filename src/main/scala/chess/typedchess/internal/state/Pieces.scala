@@ -2,9 +2,7 @@ package chess.typedchess.internal.state
 
 object Pieces {
 
-  sealed trait TCPiece {
-    def symbol: String
-  }
+  abstract class TCPiece(val symbol: String)
 
   sealed trait PromotableTo extends TCPiece
 
@@ -12,20 +10,16 @@ object Pieces {
 
   sealed trait Linear extends NonPawn
 
-  private sealed class PieceS(symb: String) extends TCPiece {
-    override def symbol: String = symb
-  }
+  case object Pawn extends TCPiece("")
 
-  case object Pawn extends PieceS("")
+  case object Knight extends TCPiece("N") with PromotableTo with NonPawn
 
-  case object Knight extends PieceS("N") with PromotableTo with NonPawn
+  case object Bishop extends TCPiece("B") with PromotableTo with Linear with NonPawn
 
-  case object Bishop extends PieceS("B") with PromotableTo with Linear with NonPawn
+  case object Rook extends TCPiece("R") with PromotableTo with Linear with NonPawn
 
-  case object Rook extends PieceS("R") with PromotableTo with Linear with NonPawn
+  case object Queen extends TCPiece("Q") with PromotableTo with Linear with NonPawn
 
-  case object Queen extends PieceS("Q") with PromotableTo with Linear with NonPawn
-
-  case object King extends PieceS("K") with NonPawn
+  case object King extends TCPiece("K") with NonPawn
 
 }

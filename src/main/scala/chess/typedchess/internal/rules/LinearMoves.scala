@@ -10,32 +10,32 @@ object LinearMoves {
   import chess.typedchess.concrete.TCTypes._
 
   def linearMovesAndCaptures(squareVectors: Map[Square, Seq[Seq[Square]]],
-                             allMoves: Map[Side, Map[Square, Map[Square, NonCastle]]],
-                             allCaptures: Map[Side, Map[Square, Map[Square, NonCastle]]],
+                             allMoves: Map[Side, Map[Square, Map[Square, PieceMove]]],
+                             allCaptures: Map[Side, Map[Square, Map[Square, PieceMove]]],
                              square: Square,
                              side: Side,
-                             pieceAt: Square => Option[Piece]): (Seq[NonCastle], Seq[NonCastle]) = {
+                             pieceAt: Square => Option[Piece]): (Seq[(Square, PieceMove)], Seq[(Square, PieceMove)]) = {
     squareVectors(square)
       .map { vector =>
         val moveMap = allMoves(side)(square)
         val captureMap = allCaptures(side)(square)
         vector
-          .foldLeft[(Seq[NonCastle], Option[NonCastle], Boolean)](Seq(), None, true) {
+          .foldLeft[(Seq[(Square, PieceMove)], Option[(Square, PieceMove)], Boolean)](Seq(), None, true) {
           case ((moves, capture, false), _) => (moves, capture, false)
           case ((moves, _, true), nextSquare) =>
             val pieceOpt = pieceAt(nextSquare)
             if (pieceOpt.isEmpty) {
-              (moveMap(nextSquare) +: moves, None, true)
+              ((nextSquare, moveMap(nextSquare)) +: moves, None, true)
             }
-            else if (pieceOpt.exists(_ != side)) {
-              (moves, captureMap.get(nextSquare), false)
+            else if (pieceOpt.exists(_.side != side)) {
+              (moves, captureMap.get(nextSquare).map(nextSquare -> _), false)
             }
             else {
               (moves, None, false)
             }
         }
       }
-      .foldLeft[(Seq[NonCastle], Seq[NonCastle])](Seq(), Seq()) {
+      .foldLeft[(Seq[(Square, PieceMove)], Seq[(Square, PieceMove)])](Seq(), Seq()) {
       case ((movesAcc, capturesAcc), (moves, capturesOpt, _)) => (moves ++ movesAcc, capturesOpt.toSeq ++ capturesAcc)
     }
   }

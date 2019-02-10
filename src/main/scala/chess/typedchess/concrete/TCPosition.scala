@@ -55,8 +55,8 @@ class TCPosition extends Position[TCTypes.type] {
           .get(square)
           .map((square, _))
       }
-      .map { case (TCSquare(f, r), FullPiece(s, p)) =>
-        f.symbol + r.symbol + (s match { case White => "W" case Black => "B"}) + p.symbol
+      .map { case (sq, pc) =>
+        sq.file.symbol + sq.rank.symbol + (pc.side match { case White => "W" case Black => "B"}) + pc.pieceType.symbol
       }
       .mkString("")
 

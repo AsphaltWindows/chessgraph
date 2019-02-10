@@ -43,7 +43,7 @@ class TCGame extends Game[TCTypes.type, TCPosition, TCMove] {
           moveHist += move
           positionHist += currentPosition
           val posId = position.id
-          val oldFreq = positionFreq.getOrElse(oldFreq, 0)
+          val oldFreq = positionFreq.getOrElse(posId, 0)
           positionFreq.update(posId, oldFreq + 1)
           currentPosition = position
         }

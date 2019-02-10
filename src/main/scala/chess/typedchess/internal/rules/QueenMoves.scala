@@ -9,7 +9,7 @@ object QueenMoves {
 
   import chess.typedchess.concrete.TCTypes._
 
-  def queenMovesAndCaptures(square: Square, side: Side, pieceAt: Square => Option[Piece]): (Seq[TCMove], Seq[TCMove]) = {
+  def queenMovesAndCaptures(square: Square, side: Side, pieceAt: Square => Option[Piece]): (Seq[(Square, TCMove)], Seq[(Square, TCMove)]) = {
     LinearMoves.linearMovesAndCaptures(
       queenVectors,
       allQueenMoveVectors,
@@ -19,8 +19,10 @@ object QueenMoves {
       pieceAt)
   }
 
+  val queenVectors = Lanes.laneVectors ++ Diagonals.diagonalVectors
+
   val allQueenMoveVectors: Map[Side, Map[Square, Map[Square, PieceMove]]] = LinearMoves
-    .allLinearCaptureVectors(
+    .allLinearMoveVectors(
       Queen,
       Lanes.laneVectors ++ Diagonals.diagonalVectors
     )
@@ -30,8 +32,6 @@ object QueenMoves {
       Queen,
       queenVectors
     )
-
-  val queenVectors = Lanes.laneVectors ++ Diagonals.diagonalVectors
 
   val allMovesFlattened: Seq[TCMove] = LinearMoves.flattenMoveVectors(allQueenMoveVectors) ++
     LinearMoves.flattenMoveVectors(allQueenCaptureVectors)

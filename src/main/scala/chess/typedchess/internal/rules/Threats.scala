@@ -17,20 +17,20 @@ object Threats {
           case Bishop => {
             Diagonals.squareToDiagonal(at).exists(_.contains(square)) && {
               val (_, captures) = BishopMoves.bishopMovesAndCaptures(at, attackedBy, position.onSquare)
-              captures.exists(_.to == square)
+              captures.exists(_._1 == square)
             }
           }
           case Rook => {
             Lanes.squareToLane(at).exists(_.contains(square)) && {
               val (_, captures) = RookMoves.rookMovesAndCaptures(at, attackedBy, position.onSquare)
-              captures.exists(_.to == square)
+              captures.exists(_._1 == square)
             }
           }
           case Queen => {
             (Lanes.squareToLane(at).exists{_.contains(square)} ||
               Diagonals.squareToDiagonal(at).exists{_.contains(square)}) && {
               val (_, captures) = QueenMoves.queenMovesAndCaptures(at, attackedBy, position.onSquare)
-              captures.exists(_.to == square)
+              captures.exists(_._1 == square)
             }
           }
           case King => KingMoves.allKingCaptures(attackedBy)(at).exists(_._1 == square)

@@ -20,7 +20,7 @@ object KnightMoves {
 
   def knightCaptures(square: Square, side: Side, opponentPieceAt: (Side, Square) => Boolean): Seq[TCMove] = {
     allKnightMoves(side)(square)
-      .filter { case (k, v) => opponentPieceAt(k) }
+      .filter { case (k, v) => opponentPieceAt(side, k) }
       .values
       .toSeq
   }

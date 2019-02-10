@@ -18,15 +18,23 @@ sealed trait TCRank {
 
 object Board {
 
-  type Square = TCSquare
+  type Square = TCSquareTrait
 
-  private case class TCSquare(file: TCFile, rank: TCRank)
+  trait TCSquareTrait {
+    def file: TCFile
+    def rank: TCRank
+  }
 
-  private sealed class FileS(symb: String) extends TCFile {
+  private case class TCSquare(f: TCFile, r: TCRank) extends TCSquareTrait {
+    override def file: TCFile = f
+    override def rank: TCRank = r
+  }
+
+  sealed class FileS(symb: String) extends TCFile {
     override def symbol: String = symb
   }
 
-  private sealed class RankS(symb: String) extends TCRank {
+  sealed class RankS(symb: String) extends TCRank {
     override def symbol: String = symb
   }
 
@@ -343,7 +351,7 @@ object Board {
   )
 
 
-  val allSquaresByFileRank: Map[TCFile, Map[TCRank, TCSquare]] = Map(
+  val allSquaresByFileRank: Map[TCFile, Map[TCRank, Square]] = Map(
     A -> Map(
       `1` -> A1,
       `2` -> A2,
@@ -426,7 +434,7 @@ object Board {
     )
   )
 
-  val allSquaresByRankFile: Map[TCRank, Map[TCFile, TCSquare]] = Map(
+  val allSquaresByRankFile: Map[TCRank, Map[TCFile, Square]] = Map(
     `1` -> Map(
       A -> A1,
       B -> B1,
@@ -509,7 +517,7 @@ object Board {
     )
   )
 
-  val allSquares: Seq[TCSquare] = Seq(
+  val allSquares: Seq[Square] = Seq(
     A1, A2, A3, A4, A5, A6, A7, A8,
     B1, B2, B3, B4, B5, B6, B7, B8,
     C1, C2, C3, C4, C5, C6, C7, C8,
@@ -522,7 +530,7 @@ object Board {
 
   object TCSquare {
 
-    def apply(file: TCFile, rank: TCRank): TCSquare = {
+    def apply(file: TCFile, rank: TCRank): Square = {
       allSquaresByFileRank(file)(rank)
     }
   }

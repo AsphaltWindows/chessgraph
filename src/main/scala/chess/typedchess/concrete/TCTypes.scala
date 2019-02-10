@@ -19,9 +19,17 @@ object TCTypes extends Types {
 
   override type Square = Board.Square
 
-  private case class FullPiece(side: Side, pieceType: PieceType)
+  trait FullPieceTrait {
+    def side: Side
+    def pieceType: PieceType
+  }
 
-  override type Piece = FullPiece
+  private case class FullPiece(s: Side, p: PieceType) extends FullPieceTrait {
+    override def side: Side = s
+    override def pieceType: PieceType = p
+  }
+
+  override type Piece = FullPieceTrait
 
   override def sq(file: TCFile, rank: TCRank): Square = TCSquare.apply(file, rank)
 
@@ -30,7 +38,7 @@ object TCTypes extends Types {
 
   object FullPiece {
 
-    def apply(side: Side, pieceType: PieceType): FullPiece = {
+    def apply(side: Side, pieceType: PieceType): Piece = {
       pieceMap(side)(pieceType)
     }
   }
@@ -49,7 +57,7 @@ object TCTypes extends Types {
   val BlackQueen = FullPiece(Black, Queen)
   val BlackKing = FullPiece(Black, King)
 
-  private val pieceMap: Map[Side, Map[PieceType, FullPiece]] = Map(
+  private val pieceMap: Map[Side, Map[PieceType, Piece]] = Map(
     White -> Map(
       Pawn -> WhitePawn,
       Knight -> WhiteKnight,

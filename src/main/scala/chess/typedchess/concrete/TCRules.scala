@@ -50,7 +50,7 @@ object TCRules extends Rules[TCTypes.type, TCPosition, TCMove, TCGame] {
                 toMove,
                 pieceAt
               )
-            moves ++ caps
+            (moves ++ caps).map(_._2)
           }
         case (Rook, pieces) =>
           pieces.flatMap { case (square, _) =>
@@ -60,7 +60,7 @@ object TCRules extends Rules[TCTypes.type, TCPosition, TCMove, TCGame] {
                 toMove,
                 pieceAt
               )
-            moves ++ caps
+            (moves ++ caps).map(_._2)
           }
         case (Queen, pieces) =>
           pieces.flatMap { case (square, _) =>
@@ -70,7 +70,7 @@ object TCRules extends Rules[TCTypes.type, TCPosition, TCMove, TCGame] {
                 toMove,
                 pieceAt
               )
-            moves ++ caps
+            (moves ++ caps).map(_._2)
           }
         case (King, pieces) =>
           pieces.flatMap { case (square, _) =>
