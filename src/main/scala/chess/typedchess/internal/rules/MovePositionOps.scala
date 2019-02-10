@@ -84,26 +84,64 @@ object MovePositionOps {
     Place(pce(p.side, p.promoteTo), p.to),
     ResetEnPassant,
     FlipMove
-  )
+  ) ++ disableCastling(p)
 
   def pawnPromoAdvanceOps(p: Promotion with Advance): Seq[PositionOp] = Seq(
     Remove(p.from),
     Place(pce(p.side, p.promoteTo), p.to),
     ResetEnPassant,
     FlipMove
-  )
+  ) ++ disableCastling(p)
 
   def moveOps(nc: NonCastle): Seq[PositionOp] = Seq(
     Reposition(nc.from, nc.to),
     ResetEnPassant,
     FlipMove
-  )
+  ) ++ disableCastling(nc)
 
   def captureOps(p: Capture): Seq[PositionOp] = Seq(
     Remove(p.to),
     Reposition(p.from, p.to),
     ResetEnPassant,
     FlipMove
-  )
+  ) ++ disableCastling(p)
+
+  def disableCastling(nonCastle: NonCastle): Seq[PositionOp] = {
+    if (nonCastle.to == E1 || nonCastle.from == E1) {
+      Seq(
+        DisableLongCastle(White),
+        DisableShortCastle(White)
+      )
+    }
+    else if (nonCastle.to == E8 || nonCastle.from == E8) {
+      Seq(
+        DisableLongCastle(Black),
+        DisableShortCastle(Black)
+      )
+    }
+    else if (nonCastle.to == A1 || nonCastle.from == A1) {
+      Seq(
+        DisableLongCastle(White)
+      )
+    }
+    else if (nonCastle.to == A8 || nonCastle.from == A8) {
+      Seq(
+        DisableLongCastle(Black)
+      )
+    }
+    else if (nonCastle.to == H1 || nonCastle.from == H1) {
+      Seq(
+        DisableShortCastle(White)
+      )
+    }
+    else if (nonCastle.to == H8 || nonCastle.from == H8) {
+      Seq(
+        DisableShortCastle(Black)
+      )
+    }
+    else {
+      Seq()
+    }
+  }
 
 }
