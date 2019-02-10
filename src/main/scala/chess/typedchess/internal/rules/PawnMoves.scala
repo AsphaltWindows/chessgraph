@@ -1,6 +1,7 @@
 package chess.typedchess.internal.rules
 
 import chess.typedchess.concrete.Moves._
+import chess.typedchess.concrete.TCMove
 import chess.typedchess.internal.state.{Black, Board, TCFile, White}
 
 object PawnMoves {
@@ -9,18 +10,18 @@ object PawnMoves {
   import chess.typedchess.concrete.TCTypes._
   import chess.typedchess.internal.state.Pieces._
 
-  def pawnAdvances(square: Square, side: Side, squareEmpty: Square => Boolean): Seq[PawnMove] = {
+  def pawnAdvances(square: Square, side: Side, squareFree: Square => Boolean): Seq[TCMove] = {
     side match {
       case White => whitePawnMoves(square).filter { move =>
-        squareEmpty(move.to)
+        squareFree(move.to)
       }
       case Black => blackPawnMoves(square).filter { move =>
-        squareEmpty(move.to)
+        squareFree(move.to)
       }
     }
   }
 
-  def pawnCaptures(square: Square, side: Side, opposingPiece: (Side, Square) => Boolean): Seq[PawnMove] = {
+  def pawnCaptures(square: Square, side: Side, opposingPiece: (Side, Square) => Boolean): Seq[TCMove] = {
     side match {
       case White => whitePawnCaptures(square).filter { move =>
         opposingPiece(side, square)
@@ -31,7 +32,7 @@ object PawnMoves {
     }
   }
 
-  def pawnEnPassant(square: Square, side: Side, enPassant: Square): Seq[PawnMove] = {
+  def pawnEnPassant(square: Square, side: Side, enPassant: Square): Seq[TCMove] = {
     side match {
       case White => whitePawnEnPassant(square).filter { move =>
         move.enpassant == enPassant
