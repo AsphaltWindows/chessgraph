@@ -99,8 +99,8 @@ object TCPosition {
       sideToMove = pos.sideToMove
       squareEnPassant = pos.squareEnPassant
       override protected val index: PositionIndex = PositionIndex.copy(pos.index)
-      override val longCastleMap: MutMap[Side, Boolean] = MutMap() ++ longCastleMap
-      override val shortCastleMap: MutMap[Side, Boolean] = MutMap() ++ shortCastleMap
+      override val longCastleMap: MutMap[Side, Boolean] = MutMap() ++= pos.longCastleMap
+      override val shortCastleMap: MutMap[Side, Boolean] = MutMap() ++= pos.shortCastleMap
     }
   }
 

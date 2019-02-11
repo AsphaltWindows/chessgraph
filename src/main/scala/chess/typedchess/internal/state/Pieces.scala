@@ -26,14 +26,16 @@ object Pieces {
       Knight -> WhiteKnight,
       Bishop -> WhiteBishop,
       Rook -> WhiteRook,
-      Queen -> WhiteQueen
+      Queen -> WhiteQueen,
+      King -> WhiteKing
     ),
     Black -> Map(
       Pawn -> BlackPawn,
       Knight -> BlackKnight,
       Bishop -> BlackBishop,
       Rook -> BlackRook,
-      Queen -> BlackQueen
+      Queen -> BlackQueen,
+      King -> BlackKing
     )
   )
 }

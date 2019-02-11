@@ -85,7 +85,7 @@ object TCRules extends Rules[TCTypes.type, TCPosition, TCMove, TCGame] {
         )
       }
       .filter { case (_, nPos) =>
-        isKingInCheck(nPos, toMove)
+        !isKingInCheck(nPos, toMove)
       }
   }
 
