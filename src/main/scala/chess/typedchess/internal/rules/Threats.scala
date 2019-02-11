@@ -1,7 +1,7 @@
 package chess.typedchess.internal.rules
 
 import chess.typedchess.concrete.TCPosition
-import chess.typedchess.internal.state.Pieces._
+import chess.typedchess.internal.state.PieceTypes._
 
 object Threats {
 

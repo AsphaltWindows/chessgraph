@@ -2,24 +2,38 @@ package chess.typedchess.internal.state
 
 object Pieces {
 
-  abstract class TCPiece(val symbol: String)
+  import PieceTypes._
 
-  sealed trait PromotableTo extends TCPiece
+  sealed case class TCPiece(side: SideColor, pieceType: TCPieceType)
 
-  sealed trait NonPawn extends TCPiece
+  val WhitePawn = TCPiece(White, Pawn)
+  val WhiteKnight = TCPiece(White, Knight)
+  val WhiteBishop = TCPiece(White, Bishop)
+  val WhiteRook = TCPiece(White, Rook)
+  val WhiteQueen = TCPiece(White, Queen)
+  val WhiteKing = TCPiece(White, King)
 
-  sealed trait Linear extends NonPawn
+  val BlackPawn = TCPiece(Black, Pawn)
+  val BlackKnight = TCPiece(Black, Knight)
+  val BlackBishop = TCPiece(Black, Bishop)
+  val BlackRook = TCPiece(Black, Rook)
+  val BlackQueen = TCPiece(Black, Queen)
+  val BlackKing = TCPiece(Black, King)
 
-  case object Pawn extends TCPiece("")
-
-  case object Knight extends TCPiece("N") with PromotableTo with NonPawn
-
-  case object Bishop extends TCPiece("B") with PromotableTo with Linear with NonPawn
-
-  case object Rook extends TCPiece("R") with PromotableTo with Linear with NonPawn
-
-  case object Queen extends TCPiece("Q") with PromotableTo with Linear with NonPawn
-
-  case object King extends TCPiece("K") with NonPawn
-
+  val pieceMap: Map[SideColor, Map[TCPieceType, TCPiece]] = Map(
+    White -> Map(
+      Pawn -> WhitePawn,
+      Knight -> WhiteKnight,
+      Bishop -> WhiteBishop,
+      Rook -> WhiteRook,
+      Queen -> WhiteQueen
+    ),
+    Black -> Map(
+      Pawn -> BlackPawn,
+      Knight -> BlackKnight,
+      Bishop -> BlackBishop,
+      Rook -> BlackRook,
+      Queen -> BlackQueen
+    )
+  )
 }

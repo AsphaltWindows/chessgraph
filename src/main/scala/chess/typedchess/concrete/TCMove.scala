@@ -1,7 +1,7 @@
 package chess.typedchess.concrete
 
 import chess.model.Move
-import chess.typedchess.internal.state.Pieces.{NonPawn, Pawn, PromotableTo}
+import chess.typedchess.internal.state.PieceTypes.{NonPawn, Pawn, PromotableTo}
 import chess.typedchess.internal.state.{Black, White}
 
 sealed trait TCMove extends Move[TCTypes.type] {

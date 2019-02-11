@@ -4,7 +4,7 @@ import chess.model.Rules
 import chess.typedchess.concrete.TCGame.SetState
 import chess.typedchess.internal.rules
 import chess.typedchess.internal.rules._
-import chess.typedchess.internal.state.Pieces._
+import chess.typedchess.internal.state.PieceTypes._
 import chess.typedchess.internal.state._
 
 object TCRules extends Rules[TCTypes.type, TCPosition, TCMove, TCGame] {

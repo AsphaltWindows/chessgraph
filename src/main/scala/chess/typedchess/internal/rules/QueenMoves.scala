@@ -2,7 +2,7 @@ package chess.typedchess.internal.rules
 
 import chess.typedchess.concrete.Moves.PieceMove
 import chess.typedchess.concrete.TCMove
-import chess.typedchess.internal.state.Pieces.Queen
+import chess.typedchess.internal.state.PieceTypes.Queen
 
 object QueenMoves {
 

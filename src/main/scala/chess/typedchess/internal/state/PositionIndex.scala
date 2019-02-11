@@ -17,10 +17,10 @@ abstract class PositionIndex() {
 
     val pieceOpt = boardMap.get(square)
     pieceOpt
-      .foreach { case piece@FullPiece(side, _) =>
+      .foreach { case piece =>
         boardMap -= square
         pieceMap(piece) -= square
-        sideSquareMap(side) -= square
+        sideSquareMap(piece.side) -= square
       }
   }
 
@@ -44,6 +44,7 @@ object PositionIndex {
 
   import Board._
   import TCTypes._
+  import Pieces._
 
   def copy(index: PositionIndex): PositionIndex = new PositionIndex {
     override val boardMap: mutable.Map[Square, Piece] = MutMap() ++= index.boardMap
@@ -80,22 +81,22 @@ object PositionIndex {
     F2 -> WhitePawn,
     G2 -> WhitePawn,
     H2 -> WhitePawn,
-    A7 -> WhitePawn,
-    B7 -> WhitePawn,
-    C7 -> WhitePawn,
-    D7 -> WhitePawn,
-    E7 -> WhitePawn,
-    F7 -> WhitePawn,
-    G7 -> WhitePawn,
-    H7 -> WhitePawn,
-    A8 -> WhiteRook,
-    B8 -> WhiteKnight,
-    C8 -> WhiteBishop,
-    D8 -> WhiteQueen,
-    E8 -> WhiteKing,
-    F8 -> WhiteBishop,
-    G8 -> WhiteKnight,
-    H8 -> WhiteRook
+    A7 -> BlackPawn,
+    B7 -> BlackPawn,
+    C7 -> BlackPawn,
+    D7 -> BlackPawn,
+    E7 -> BlackPawn,
+    F7 -> BlackPawn,
+    G7 -> BlackPawn,
+    H7 -> BlackPawn,
+    A8 -> BlackRook,
+    B8 -> BlackKnight,
+    C8 -> BlackBishop,
+    D8 -> BlackQueen,
+    E8 -> BlackKing,
+    F8 -> BlackBishop,
+    G8 -> BlackKnight,
+    H8 -> BlackRook
   )
 
 

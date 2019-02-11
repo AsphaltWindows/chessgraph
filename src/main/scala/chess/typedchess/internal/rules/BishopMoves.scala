@@ -6,7 +6,7 @@ import chess.typedchess.concrete.TCMove
 object BishopMoves {
 
   import chess.typedchess.concrete.TCTypes._
-  import chess.typedchess.internal.state.Pieces._
+  import chess.typedchess.internal.state.PieceTypes._
 
   def bishopMovesAndCaptures(square: Square, side: Side, pieceAt: Square => Option[Piece]): (Seq[(Square, TCMove)], Seq[(Square, TCMove)]) = {
     LinearMoves.linearMovesAndCaptures(

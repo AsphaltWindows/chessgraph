@@ -18,17 +18,9 @@ sealed trait TCRank {
 
 object Board {
 
-  type Square = TCSquareTrait
+  type Square = TCSquare
 
-  trait TCSquareTrait {
-    def file: TCFile
-    def rank: TCRank
-  }
-
-  private case class TCSquare(f: TCFile, r: TCRank) extends TCSquareTrait {
-    override def file: TCFile = f
-    override def rank: TCRank = r
-  }
+  sealed case class TCSquare(file: TCFile, rank: TCRank)
 
   sealed class FileS(symb: String) extends TCFile {
     override def symbol: String = symb
@@ -527,12 +519,5 @@ object Board {
     G1, G2, G3, G4, G5, G6, G7, G8,
     H1, H2, H3, H4, H5, H6, H7, A8
   )
-
-  object TCSquare {
-
-    def apply(file: TCFile, rank: TCRank): Square = {
-      allSquaresByFileRank(file)(rank)
-    }
-  }
 
 }

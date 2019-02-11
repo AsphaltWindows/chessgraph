@@ -1,7 +1,7 @@
 package chess.typedchess.internal.rules
 
 import chess.typedchess.concrete.TCMove
-import chess.typedchess.internal.state.Pieces.Knight
+import chess.typedchess.internal.state.PieceTypes.Knight
 import chess.typedchess.internal.state.{Black, White}
 
 object KnightMoves {

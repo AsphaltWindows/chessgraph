@@ -2,7 +2,7 @@ package chess.typedchess.internal.rules
 
 import chess.typedchess.concrete.Moves._
 import chess.typedchess.concrete.TCMove
-import chess.typedchess.internal.state.Pieces.Linear
+import chess.typedchess.internal.state.PieceTypes.Linear
 import chess.typedchess.internal.state.{Black, White}
 
 object LinearMoves {

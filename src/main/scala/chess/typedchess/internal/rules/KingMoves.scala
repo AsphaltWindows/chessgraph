@@ -1,7 +1,7 @@
 package chess.typedchess.internal.rules
 
 import chess.typedchess.concrete.TCMove
-import chess.typedchess.internal.state.Pieces.{King, Knight}
+import chess.typedchess.internal.state.PieceTypes.{King, Knight}
 import chess.typedchess.internal.state.{Black, White}
 
 object KingMoves {
@@ -39,7 +39,7 @@ object KingMoves {
       )
         .flatten
 
-      s -> lateral
+      s-> lateral
         .flatMap { nf =>
           vertical
             .map { nr =>

@@ -8,7 +8,7 @@ object PawnMoves {
 
   import Board._
   import chess.typedchess.concrete.TCTypes._
-  import chess.typedchess.internal.state.Pieces._
+  import chess.typedchess.internal.state.PieceTypes._
 
   def pawnAdvances(square: Square, side: Side, squareFree: Square => Boolean): Seq[TCMove] = {
 
@@ -55,7 +55,7 @@ object PawnMoves {
             (r + 1)
               .toSeq
               .map { nr =>
-                PawnAdvanceBlack(s, TCSquare(f, nr))
+                PawnAdvanceBlack(s, sq(f, nr))
               }
           })
       }.toMap,
@@ -82,7 +82,7 @@ object PawnMoves {
           (r - 1)
             .toSeq
             .map { nr =>
-              PawnAdvanceBlack(s, TCSquare(f, nr))
+              PawnAdvanceBlack(s, sq(f, nr))
             }
         })
       }.toMap

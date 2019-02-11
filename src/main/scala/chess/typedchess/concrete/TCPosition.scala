@@ -1,9 +1,9 @@
 package chess.typedchess.concrete
 
 import chess.model.Position
-import chess.typedchess.concrete.TCTypes.FullPiece
 import chess.typedchess.internal.state.Board.TCSquare
-import chess.typedchess.internal.state.Pieces.King
+import chess.typedchess.internal.state.PieceTypes.King
+import chess.typedchess.internal.state.Pieces.TCPiece
 import chess.typedchess.internal.state._
 
 import scala.collection.mutable.{Map => MutMap}
@@ -55,12 +55,12 @@ class TCPosition extends Position[TCTypes.type] {
           .get(square)
           .map((square, _))
       }
-      .map { case (sq, pc) =>
-        sq.file.symbol + sq.rank.symbol + (pc.side match { case White => "W" case Black => "B"}) + pc.pieceType.symbol
+      .map { case (TCSquare(f, r), TCPiece(sd, pc)) =>
+        f.symbol + r.symbol + (sd match { case White => "W" case Black => "B"}) + pc.symbol
       }
       .mkString("")
 
-    val enp = enPassant.map{case TCSquare(f, r) => "e" + f.symbol + r.symbol}
+    val enp = enPassant.map{ case TCSquare(f, r) => "e" + f.symbol + r.symbol}.getOrElse("")
 
     turn + wsc + wlc + bsc + blc + pieces + enp
   }
