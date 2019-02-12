@@ -1,6 +1,6 @@
 package chess.model
 
-trait Model[T <: Types] {
+trait Chess[T <: Types] {
 
   val t: T
 

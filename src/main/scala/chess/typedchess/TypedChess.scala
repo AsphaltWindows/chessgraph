@@ -1,9 +1,9 @@
 package chess.typedchess
 
-import chess.model.Model
+import chess.model.Chess
 import chess.typedchess.concrete.{TCRules, _}
 
-object TypedChess extends Model[TCTypes.type] {
+object TypedChess extends Chess[TCTypes.type] {
   override val t: TCTypes.type = TCTypes
 
   override type Pos = TCPosition
