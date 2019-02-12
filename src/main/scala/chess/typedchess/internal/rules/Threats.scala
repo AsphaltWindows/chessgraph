@@ -2,6 +2,7 @@ package chess.typedchess.internal.rules
 
 import chess.typedchess.concrete.TCPosition
 import chess.typedchess.internal.state.PieceTypes._
+import chess.typedchess.internal.state.SideColor
 
 object Threats {
 
@@ -38,4 +39,7 @@ object Threats {
       }
   }
 
+  def isKingInCheck(position: TCPosition, sideOfKing: Side): Boolean = {
+    Threats.isSquareAttacked(position)(position.findKing(sideOfKing), SideColor.other(sideOfKing))
+  }
 }

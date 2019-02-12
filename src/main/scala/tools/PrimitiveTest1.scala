@@ -15,7 +15,7 @@ object PrimitiveTest1 extends App {
 
     val nextMoves = chess
       .rules
-      .legalNextMoves(game1.currentPosition)
+      .legalNextMoves(game1)
 
     println(nextMoves.size + " legal moves:")
 

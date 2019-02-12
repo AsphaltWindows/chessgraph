@@ -64,6 +64,9 @@ object Diagonals {
     A8H1
   )
 
+  val darkSquares: Set[Square] = A1H8 ++ A3C1 ++ A3F8 ++ C1H6 ++ F8H6 ++ A5E1 ++ A5D8 ++ E1H4 ++ D8H4 ++ A7G1 ++ A7B8 ++ G1H2 ++ B8H2
+  val lightSquares: Set[Square] = A2B1 ++ A2G8 ++ B1H7 ++ G8H7 ++ A4D1 ++ A4E8 ++ D1H5 ++ E8H5 ++ A6F1 ++ A6C8 ++ F1H3 ++ C8H3 ++ A8H1
+
   val squareToDiagonal: Map[Square, Seq[Diagonal]] = allSquares
     .map { square =>
       square -> allDiagonals.filter { diag =>
