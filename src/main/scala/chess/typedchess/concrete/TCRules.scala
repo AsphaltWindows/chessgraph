@@ -2,7 +2,6 @@ package chess.typedchess.concrete
 
 import chess.model.Rules
 import chess.typedchess.concrete.TCGame.SetState
-import chess.typedchess.internal.rules
 import chess.typedchess.internal.rules._
 import chess.typedchess.internal.state.PieceTypes._
 import chess.typedchess.internal.state._

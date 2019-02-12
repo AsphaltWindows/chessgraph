@@ -30,21 +30,21 @@ object Board {
     override def symbol: String = symb
   }
 
-  case object A extends FileS("A")
+  case object A extends FileS("a")
 
-  case object B extends FileS("B")
+  case object B extends FileS("b")
 
-  case object C extends FileS("C")
+  case object C extends FileS("c")
 
-  case object D extends FileS("D")
+  case object D extends FileS("d")
 
-  case object E extends FileS("E")
+  case object E extends FileS("e")
 
-  case object F extends FileS("F")
+  case object F extends FileS("f")
 
-  case object G extends FileS("G")
+  case object G extends FileS("g")
 
-  case object H extends FileS("H")
+  case object H extends FileS("h")
 
   case object `1` extends RankS("1")
 
@@ -321,7 +321,7 @@ object Board {
   val H7 = TCSquare(H, `7`)
   val H8 = TCSquare(H, `8`)
 
-  val allRanks: Seq[TCRank] = Seq( `1`,
+  val allRanks: Seq[TCRank] = Seq(`1`,
     `2`,
     `3`,
     `4`,
@@ -519,5 +519,13 @@ object Board {
     G1, G2, G3, G4, G5, G6, G7, G8,
     H1, H2, H3, H4, H5, H6, H7, H8
   )
+
+  val squareStrings: Map[Square, String] = allSquares
+    .map { square =>
+      square -> (square.file.symbol + square.rank.symbol)
+    }
+    .toMap
+
+  val stringToSquare: Map[String, Square] = squareStrings.map { case (str, sqr) => (sqr, str) }
 
 }

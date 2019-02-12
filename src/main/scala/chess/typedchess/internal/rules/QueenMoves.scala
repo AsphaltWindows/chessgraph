@@ -19,12 +19,16 @@ object QueenMoves {
       pieceAt)
   }
 
-  val queenVectors = Lanes.laneVectors ++ Diagonals.diagonalVectors
-
+  val queenVectors = (Lanes.laneVectors.toSeq ++ Diagonals.diagonalVectors.toSeq)
+    .groupBy(_._1)
+    .map { case (from, vecTups) =>
+      from -> vecTups
+        .flatMap(_._2)
+    }
   val allQueenMoveVectors: Map[Side, Map[Square, Map[Square, PieceMove]]] = LinearMoves
     .allLinearMoveVectors(
       Queen,
-      Lanes.laneVectors ++ Diagonals.diagonalVectors
+      queenVectors
     )
 
   val allQueenCaptureVectors: Map[Side, Map[Square, Map[Square, PieceMove]]] = LinearMoves

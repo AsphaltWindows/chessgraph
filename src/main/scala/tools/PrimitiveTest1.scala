@@ -1,8 +1,9 @@
 package tools
 
 import chess.typedchess.TypedChess
+import chess.typedchess.internal.notation.LongAlgebraic
 
-object PrimitiveTest extends App {
+object PrimitiveTest1 extends App {
 
   override def main(args: Array[String]): Unit = {
 
@@ -16,10 +17,15 @@ object PrimitiveTest extends App {
       .rules
       .legalNextMoves(game1.currentPosition)
 
-    println(nextMoves.size)
+    println(nextMoves.size + " legal moves:")
 
     nextMoves.foreach {case (mv, pos) =>
-      println(mv)
+      println(LongAlgebraic.moveToLongAlgMap(mv))
+    }
+
+    println(nextMoves.size + " resulting positions:")
+
+    nextMoves.foreach {case (mv, pos) =>
       println(pos.id)
     }
 

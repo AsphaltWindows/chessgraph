@@ -111,7 +111,7 @@ object PositionIndex {
     BlackKnight -> Set(B8, G8),
     BlackBishop -> Set(C8, F8),
     BlackQueen -> Set(D8),
-    BlackKing -> Set(B8),
+    BlackKing -> Set(E8),
     BlackPawn -> Set(A7, B7, C7, D7, E7, F7, G7, H7)
   )
 
