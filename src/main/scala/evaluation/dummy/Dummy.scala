@@ -14,9 +14,13 @@ object Dummy extends Evaluation {
 
   override def newCache(): Cache = 0
 
-  override def cacheEval(cache: Cache, input: Input, result: Result): Unit = {}
+  override def cacheAppend(cache: Cache, input: Input, result: Result): Unit = {}
 
   override def deriveData(cache: Cache): Seq[TrainingData] = Seq()
 
   override def trainModel(model: Model, data: TrainingData): Unit = {}
+
+  override def readFromFile(filename: String): Int = ???
+
+  override def writeToFile(fileName: String, model: Int): Unit = ???
 }

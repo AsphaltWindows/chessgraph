@@ -12,10 +12,14 @@ trait Evaluation {
 
   def newCache(): Cache
 
-  def cacheEval(cache: Cache, input: Input, result: Result): Unit
+  def cacheAppend(cache: Cache, input: Input, result: Result): Unit
 
   def deriveData(cache: Cache): Seq[TrainingData]
 
   def trainModel(model: Model, data: TrainingData): Unit
+
+  def readFromFile(filename: String): Model
+
+  def writeToFile(fileName: String, model: Model): Unit
 
 }
