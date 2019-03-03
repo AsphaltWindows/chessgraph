@@ -25,10 +25,12 @@ object InteractiveTest extends App {
 
     while (game1.gameState == InProgress) {
       val moveStr = StdIn.readLine(toMovePrompt(game1.currentPosition.toMove))
-      val move = LongAlgebraic.longAlgToMoveMap(game1.currentPosition.toMove)(moveStr)
-      chess.rules.advanceGame(game1, move, chess.rules.newPosition(game1.currentPosition, move))
-      if(guiEnabled){
-        DrawBoard.draw(game1.position)
+      val moveOpt = LongAlgebraic.longAlgToMoveMap(game1.currentPosition.toMove).get(moveStr)
+      moveOpt.foreach{ move =>
+        chess.rules.advanceGame(game1, move, chess.rules.newPosition(game1.currentPosition, move))
+        if(guiEnabled){
+          DrawBoard.draw(game1.position)
+        }
       }
     }
 
