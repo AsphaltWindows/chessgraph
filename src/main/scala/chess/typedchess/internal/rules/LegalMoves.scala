@@ -20,7 +20,7 @@ object LegalMoves {
 
     def pieceAt(square: Square): Option[Piece] = position.onSquare(square)
 
-    allPieces
+    (allPieces
       .toSeq
       .flatMap {
         case (Pawn, pieces) =>
@@ -74,7 +74,15 @@ object LegalMoves {
             KingMoves.kingMoves(square, toMove, isFree) ++
               KingMoves.kingCaptures(square, toMove, isOpponentPiece)
           }
-      }
+      } ++
+      CastleMoves.castleMoves(
+        position.toMove,
+        Threats.isSquareAttacked(position),
+        isFree,
+        position.longCastleMap(position.toMove),
+        position.shortCastleMap(position.toMove)
+      )
+      )
       .map { move =>
         (
           move,

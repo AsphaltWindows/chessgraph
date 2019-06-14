@@ -40,8 +40,8 @@ object CastleMoves {
   def castleMoves(side: Side,
                   isThreatenedBy: (Square, Side) => Boolean,
                   isFree: Square => Boolean,
-                  longCastleMap: Map[Side, Boolean],
-                  shortCastleMap: Map[Side, Boolean]): Seq[Castle] = {
+                  longCastle: Boolean,
+                  shortCastle: Boolean): Seq[Castle] = {
     allCastleMoves(side)
       .filter { castleMove =>
         nonThreatSquares(castleMove).forall { square =>
@@ -53,8 +53,8 @@ object CastleMoves {
               isFree(square)
             }
         } && (castleMove match {
-          case l: LongCastle => longCastleMap(side)
-          case s: ShortCastle => shortCastleMap(side)
+          case l: LongCastle => longCastle
+          case s: ShortCastle => shortCastle
         })
       }
   }
