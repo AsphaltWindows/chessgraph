@@ -1,24 +1,24 @@
-package chess.typedchess.internal.rules
+package chess.indexed2chess.internal.rules
 
-import chess.typedchess.concrete.TCMove
-import chess.typedchess.internal.state.PieceTypes.Knight
-import chess.typedchess.internal.state.{Black, White}
+import chess.indexed2chess.concrete.ICMove
+import chess.indexed2chess.internal.state.PieceTypes.Knight
+import chess.indexed2chess.internal.state.{Black, White}
 
 object KnightMoves {
 
-  import chess.typedchess.concrete.Moves._
-  import chess.typedchess.concrete.TCTypes._
-  import chess.typedchess.internal.state.Board._
+  import chess.indexed2chess.concrete.Moves._
+  import chess.indexed2chess.concrete.ICTypes._
+  import chess.indexed2chess.internal.state.Board._
 
 
-  def knightMoves(square: Square, side: Side, squareFree: Square => Boolean): Seq[TCMove] = {
+  def knightMoves(square: Square, side: Side, squareFree: Square => Boolean): Seq[ICMove] = {
     allKnightMoves(side)(square)
       .filter { case (k, v) => squareFree(k) }
       .values
       .toSeq
   }
 
-  def knightCaptures(square: Square, side: Side, opponentPieceAt: (Side, Square) => Boolean): Seq[TCMove] = {
+  def knightCaptures(square: Square, side: Side, opponentPieceAt: (Side, Square) => Boolean): Seq[ICMove] = {
     allKnightCaptures(side)(square)
       .filter { case (k, v) => opponentPieceAt(side, k) }
       .values
@@ -26,7 +26,7 @@ object KnightMoves {
   }
 
   private val allKnightSquares: Map[Square, Seq[Square]] = allSquares
-    .map { case s@TCSquare(f, r) =>
+    .map { case s@ICSquare(f, r) =>
       val bigLateral = Seq(
         f + 2,
         f - 2
@@ -101,7 +101,7 @@ object KnightMoves {
       }
   )
 
-  val allMovesFlattened: Seq[TCMove] = allKnightMoves.toSeq.flatMap { case (_, moveFromMap) =>
+  val allMovesFlattened: Seq[ICMove] = allKnightMoves.toSeq.flatMap { case (_, moveFromMap) =>
     moveFromMap.flatMap { case (_, moveToMap) =>
       moveToMap.values
     }

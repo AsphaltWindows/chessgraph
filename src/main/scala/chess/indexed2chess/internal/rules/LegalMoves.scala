@@ -1,13 +1,13 @@
-package chess.typedchess.internal.rules
+package chess.indexed2chess.internal.rules
 
-import chess.typedchess.concrete.{TCGame, TCMove, TCPosition}
-import chess.typedchess.internal.state.PieceTypes._
+import chess.indexed2chess.concrete.{ICGame, ICMove, ICPosition}
+import chess.indexed2chess.internal.state.PieceTypes._
 
 object LegalMoves {
 
-  import chess.typedchess.concrete.TCTypes._
+  import chess.indexed2chess.concrete.ICTypes._
 
-  def legalNextMovesPositions(position: TCPosition): Seq[(TCMove, TCPosition)] = {
+  def legalNextMovesPositions(position: ICPosition): Seq[(ICMove, ICPosition)] = {
     val toMove = position.toMove
     val allPieces = position.allPieces(toMove)
       .groupBy(_._2.pieceType)
@@ -71,10 +71,8 @@ object LegalMoves {
           }
         case (King, pieces) =>
           pieces.flatMap { case (square, _) =>
-            val kmoves = KingMoves.kingMoves(square, toMove, isFree)
-            val kcaptures = KingMoves.kingCaptures(square, toMove, isOpponentPiece)
-            val klegal = kmoves ++ kcaptures
-            klegal
+            KingMoves.kingMoves(square, toMove, isFree) ++
+              KingMoves.kingCaptures(square, toMove, isOpponentPiece)
           }
       } ++
       CastleMoves.castleMoves(
@@ -96,8 +94,8 @@ object LegalMoves {
       }
   }
 
-  def newPosition(position: TCPosition, move: TCMove): TCPosition = {
-    val copy = TCPosition.copy(position)
+  def newPosition(position: ICPosition, move: ICMove): ICPosition = {
+    val copy = ICPosition.copy(position)
     copy.handleOps(
       MovePositionOps
         .movePositionsOpsMap(move)
