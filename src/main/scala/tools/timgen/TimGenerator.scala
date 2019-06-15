@@ -43,7 +43,9 @@ object TimGenerator extends App {
         }
 
         pwTim.close()
+        pwHuman.println(game.gameState)
         pwHuman.close()
+        println(s"${(game.moveHistory.size + 1)/2} moves ${game.gameState} ${game.moveHistory.map(m => LongAlgebraic.moveToLongAlgMap(m))}")
 
       }
   }
