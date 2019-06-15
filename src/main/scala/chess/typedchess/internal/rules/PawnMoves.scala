@@ -55,7 +55,7 @@ object PawnMoves {
             (r + 1)
               .toSeq
               .map { nr =>
-                PawnAdvanceBlack(s, sq(f, nr))
+                PawnAdvanceWhite(s, sq(f, nr))
               }
           })
       }.toMap,
@@ -140,10 +140,10 @@ object PawnMoves {
                 .toSeq
                 .flatMap { nr =>
                   Seq(
-                    PawnCapturePromoteWhite(s, sq(file, nr), Knight),
-                    PawnCapturePromoteWhite(s, sq(file, nr), Bishop),
-                    PawnCapturePromoteWhite(s, sq(file, nr), Rook),
-                    PawnCapturePromoteWhite(s, sq(file, nr), Queen)
+                    PawnCapturePromoteBlack(s, sq(file, nr), Knight),
+                    PawnCapturePromoteBlack(s, sq(file, nr), Bishop),
+                    PawnCapturePromoteBlack(s, sq(file, nr), Rook),
+                    PawnCapturePromoteBlack(s, sq(file, nr), Queen)
                   )
                 }
             }
@@ -154,7 +154,7 @@ object PawnMoves {
                 (r - 1)
                   .toSeq
                   .map { nr =>
-                    PawnCaptureWhite(s, sq(file, nr))
+                    PawnCaptureBlack(s, sq(file, nr))
                   }
               }
           })
@@ -176,7 +176,7 @@ object PawnMoves {
       .map {
         case s@TCSquare(f, `4`) => s -> validCaptureFiles(f)
           .map { file =>
-            PawnEnPassantWhite(s, sq(file, `3`), sq(file, `4`))
+            PawnEnPassantBlack(s, sq(file, `3`), sq(file, `4`))
           }
         case s => s -> Seq()
       }

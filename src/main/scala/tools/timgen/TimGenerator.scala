@@ -38,12 +38,15 @@ object TimGenerator extends App {
         while (game.gameState == InProgress) {
           val movePlayed = TimGame.makeMove(game)
           pwTim.println(TimPrinter.positionString(game.currentPosition))
+          pwTim.flush()
           pwHuman.println(s"${(game.moveHistory.size - 1)/2 + 1}${if(game.moveHistory.size % 2 == 1) "" else ".."}${LongAlgebraic.moveToLongAlgMap(movePlayed)}")
           pwHuman.println(DrawBoard.draw(game.currentPosition))
+          pwHuman.flush()
         }
 
         pwTim.close()
         pwHuman.println(game.gameState)
+        pwHuman.flush()
         pwHuman.close()
         println(s"${(game.moveHistory.size + 1)/2} moves ${game.gameState} ${game.moveHistory.map(m => LongAlgebraic.moveToLongAlgMap(m))}")
 

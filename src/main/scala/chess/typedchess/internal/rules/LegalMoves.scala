@@ -71,10 +71,8 @@ object LegalMoves {
           }
         case (King, pieces) =>
           pieces.flatMap { case (square, _) =>
-            val kmoves = KingMoves.kingMoves(square, toMove, isFree)
-            val kcaptures = KingMoves.kingCaptures(square, toMove, isOpponentPiece)
-            val klegal = kmoves ++ kcaptures
-            klegal
+            KingMoves.kingMoves(square, toMove, isFree) ++
+              KingMoves.kingCaptures(square, toMove, isOpponentPiece)
           }
       } ++
       CastleMoves.castleMoves(
