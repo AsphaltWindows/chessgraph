@@ -21,14 +21,15 @@ object LongAlgebraic {
     }
     .toMap
 
-  val longAlgToMoveMap: Map[Side, Map[String, ICMove]] = moveToLongAlgMap
+  val longAlgToMoveMap: Map[Side, Map[String, Set[ICMove]]] = moveToLongAlgMap
     .toSeq
     .groupBy(_._1.side)
     .map { case (side, tups) =>
-      side -> tups.map { case (mov, str) =>
-        str -> mov
-      }
-        .toMap
+      side -> tups
+        .groupBy(_._2)
+        .map { case (notation, moves) =>
+          notation -> moves.map(_._1).toSet
+        }
     }
 
   def moveLongAlg(move: ICMove): String = move match {

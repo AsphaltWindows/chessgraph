@@ -10,6 +10,23 @@ object PawnMoves {
   import chess.typedchess.concrete.TCTypes._
   import chess.typedchess.internal.state.PieceTypes._
 
+  def pawnDoubleAdvances(square: Square, side: Side, squareFree: Square => Boolean): Seq[TCMove] = {
+
+    allPawnDoubleAdvances(side)(square).filter { move =>
+      squareFree(move.to) &&
+        (if (side == White)
+          move.from.rank + 1
+        else
+          move.from.rank - 1)
+          .map { rank =>
+            sq(move.from.file, rank)
+          }
+          .exists { s =>
+            squareFree(s)
+          }
+    }
+  }
+
   def pawnAdvances(square: Square, side: Side, squareFree: Square => Boolean): Seq[TCMove] = {
 
     allPawnAdvances(side)(square).filter { move =>
@@ -30,18 +47,39 @@ object PawnMoves {
     }
   }
 
+  val allPawnDoubleAdvances: Map[Side, Map[Square, Seq[PawnMove]]] = Map(
+    White -> allSquares
+      .map { case s@TCSquare(f, r) =>
+        s -> (
+          if (r == `2`) {
+            Seq(
+              PawnDoubleAdvanceWhite(s, sq(f, `4`))
+            )
+          }
+          else {
+            Seq()
+          })
+      }.toMap,
+    Black -> allSquares
+      .map { case s@TCSquare(f, r) =>
+        s -> (
+          if (r == `7`) {
+            Seq(
+              PawnDoubleAdvanceBlack(s, sq(f, `5`))
+            )
+          }
+          else {
+            Seq()
+          })
+      }.toMap
+  )
+
   val allPawnAdvances: Map[Side, Map[Square, Seq[PawnMove]]] = Map(
     White -> allSquares
       .map { case s@TCSquare(f, r) =>
         s -> (
           if (r == `1` || r == `8`) {
             Seq()
-          }
-          else if (r == `2`) {
-            Seq(
-              PawnAdvanceWhite(s, sq(f, `3`)),
-              PawnDoubleAdvanceWhite(s, sq(f, `4`))
-            )
           }
           else if (r == `7`) {
             Seq(
@@ -63,12 +101,6 @@ object PawnMoves {
       .map { case s@TCSquare(f, r) =>
         s -> (if (r == `1` || r == `8`) {
           Seq()
-        }
-        else if (r == `7`) {
-          Seq(
-            PawnAdvanceBlack(s, sq(f, `6`)),
-            PawnDoubleAdvanceBlack(s, sq(f, `5`))
-          )
         }
         else if (r == `2`) {
           Seq(
@@ -176,18 +208,20 @@ object PawnMoves {
       .map {
         case s@TCSquare(f, `4`) => s -> validCaptureFiles(f)
           .map { file =>
-            PawnEnPassantBlack(s, sq(file, `3`), sq(file, `4`))
+            PawnEnPassantWhite(s, sq(file, `3`), sq(file, `4`))
           }
         case s => s -> Seq()
       }
       .toMap
   )
 
-  val allMovesFlattened: Seq[TCMove] = allPawnAdvances.toSeq.flatMap{ case (_, moveFromMap) =>
+  val allMovesFlattened: Seq[TCMove] = allPawnAdvances.toSeq.flatMap { case (_, moveFromMap) =>
     moveFromMap.flatMap(_._2)
-  } ++ allPawnCaptures.toSeq.flatMap{ case (_, moveFromMap) =>
+  } ++ allPawnDoubleAdvances.toSeq.flatMap { case (_, moveFromMap) =>
     moveFromMap.flatMap(_._2)
-  } ++ allPawnEnPassant.toSeq.flatMap{ case (_, moveFromMap) =>
+  } ++ allPawnCaptures.toSeq.flatMap { case (_, moveFromMap) =>
+    moveFromMap.flatMap(_._2)
+  } ++ allPawnEnPassant.toSeq.flatMap { case (_, moveFromMap) =>
     moveFromMap.flatMap(_._2)
   }
 }

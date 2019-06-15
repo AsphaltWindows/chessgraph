@@ -20,7 +20,7 @@ object PrimitiveTest2 extends App {
     moves
       .foreach { alg =>
         val pos = game1.currentPosition
-        val mov = LongAlgebraic.longAlgToMoveMap(pos.toMove)(alg)
+        val mov = LongAlgebraic.longAlgToMoveMap(pos.toMove)(alg).headOption.get
         chess.rules.advanceGame(game1, mov, chess.rules.newPosition(pos, mov))
       }
 

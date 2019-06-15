@@ -26,6 +26,7 @@ object LegalMoves {
         case (Pawn, pieces) =>
           pieces.flatMap { case (square, _) =>
             PawnMoves.pawnAdvances(square, toMove, isFree) ++
+              PawnMoves.pawnDoubleAdvances(square, toMove, isFree) ++
               PawnMoves.pawnCaptures(square, toMove, isOpponentPiece) ++
               position
                 .enPassant

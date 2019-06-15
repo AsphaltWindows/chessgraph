@@ -25,8 +25,14 @@ object InteractiveTest extends App {
 
     while (game1.gameState == InProgress) {
       val moveStr = StdIn.readLine(toMovePrompt(game1.currentPosition.toMove))
-      val moveOpt = LongAlgebraic.longAlgToMoveMap(game1.currentPosition.toMove).get(moveStr)
-      moveOpt.foreach{ move =>
+      val moveSet = LongAlgebraic.longAlgToMoveMap(game1.currentPosition.toMove).get(moveStr).getOrElse(Set())
+      val moveOpt = chess
+        .rules
+        .legalNextMoves(game1)
+        .map(_._1).find { m =>
+        moveSet.contains(m)
+      }
+      moveOpt.foreach { move =>
         if (chess.rules.legalNextMoves(game1).map(_._1).contains(move)) {
           chess.rules.advanceGame(game1, move, chess.rules.newPosition(game1.currentPosition, move))
           if (guiEnabled) {
@@ -38,7 +44,7 @@ object InteractiveTest extends App {
 
     game1
       .moveHistory
-      .foreach { move=>
+      .foreach { move =>
         println(LongAlgebraic.moveToLongAlgMap(move))
       }
     println(game1.gameState)

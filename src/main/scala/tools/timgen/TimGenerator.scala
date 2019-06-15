@@ -9,11 +9,14 @@ import chess.indexed2chess.internal.state.InProgress
 import chess.indexed2chess.internal.notation.LongAlgebraic
 import tools.draw.DrawBoard
 
+import scala.util.Try
+
 /**
   * Parameters:
   * Absolute path to folder to store games
   * File Name Prefix
   * Number of games to generate
+  * Optional: maximum number of moves per game
   */
 object TimGenerator extends App {
 
@@ -23,6 +26,7 @@ object TimGenerator extends App {
     val pathArg = args(0)
     val prefixArg = args(1)
     val gameNum = args(2).toInt
+    val maxMoveNum = Try(args(3)).toOption.map(_.toInt)
 
     (1 to gameNum)
       .foreach { num =>
@@ -35,7 +39,7 @@ object TimGenerator extends App {
         pwTim.println(TimPrinter.positionString(game.currentPosition))
         pwHuman.println(DrawBoard.draw(game.currentPosition))
 
-        while (game.gameState == InProgress) {
+        while (game.gameState == InProgress && !maxMoveNum.exists { l => l*2 < game.moveHistory.size }) {
           val movePlayed = TimGame.makeMove(game)
           pwTim.println(TimPrinter.positionString(game.currentPosition))
           pwTim.flush()
@@ -48,7 +52,7 @@ object TimGenerator extends App {
         pwHuman.println(game.gameState)
         pwHuman.flush()
         pwHuman.close()
-        println(s"${(game.moveHistory.size + 1)/2} moves ${game.gameState} ${game.moveHistory.map(m => LongAlgebraic.moveToLongAlgMap(m))}")
+        println(s"gamenum: $num ${(game.moveHistory.size + 1)/2} moves ${game.gameState} ${game.moveHistory.map(m => LongAlgebraic.moveToLongAlgMap(m))}")
 
       }
   }
